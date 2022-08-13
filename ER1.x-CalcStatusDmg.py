@@ -62,16 +62,18 @@ def PrintCalc(targetHp, name, duration, dmgFlat, dmgPercentage):
     dps = CalcDPS(targetHp, dmgFlat, dmgPercentage)
     totalDmg = CalcTotalDamage(dps, duration)
     procsToDth = targetHp / totalDmg
+    timeToDth = floor(duration * procsToDth)
     procsToDthCeil = ceil(procsToDth)
     procsToDthFloor = floor(procsToDth)
     procsToDthFloorRemainder = procsToDth - procsToDthFloor
     procsToDthFloorDmgReq = totalDmg * procsToDthFloorRemainder
     procsToDthFloorDmgReqCeil = ceil(procsToDthFloorDmgReq)
-
+    procsToKillFloorTxt = f"{procsToDthFloor}, Extra Damage Required = {procsToDthFloorDmgReqCeil} " if procsToDthFloor >= 1 else "N/A"
+    
     print(f"{name}: Duration = {duration}, Dmg = {dmgFlat}, Dmg% = {dmgPercentage}")
     print(f"Proc Damage = {totalDmg}, Dps = {dps}")
-    print(f"Procs to kill = {procsToDth}")
-    print(f"Procs to kill Floor = {procsToDthFloor}, + {procsToDthFloorDmgReqCeil} Damage")
+    print(f"Procs to kill = {procsToDth}, Seconds to Kill = {timeToDth}")
+    print(f"Procs to kill Floor = {procsToKillFloorTxt}")
     print(f"Procs to kill Ceil = {procsToDthCeil}")
     PrintSeparator()
     return
